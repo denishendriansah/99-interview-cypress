@@ -5,7 +5,7 @@
   You may structure or name your file however you see fit as this is just a template
 */
 
-describe('99.co Singapore Home Page', () => {
+describe('99.co Singapore Home Page - Check H2 Titles', () => {
   beforeEach(() => {
     cy.visit('https://www.99.co/singapore')
   })

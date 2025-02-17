@@ -5,20 +5,33 @@
   You may structure or name your file however you see fit as this is just a template
 */
 
-describe("Test Suite 2", () => {
+describe('99.co Singapore Home Page - Check Popular Projects Links', () => {
   beforeEach(() => {
-    //Optional
+    cy.visit('https://www.99.co/singapore');
   });
 
-  it("Test Case 1", () => {
-    //Write your automation script here for Test Case 1
+  it('should contain the text "Popular Projects"', () => {
+    cy.get('div._1__lJ').contains('Popular projects').should('be.visible');
   });
 
-  it("Test Case 2", () => {
-    //Optional
-  });
+  it('should check that links under "Popular Projects" work as expected', () => {
+    cy.get('div[data-cy="popularProjects"]').within(() => {
+      cy.get('a').each(($el) => {
+        cy.wrap($el).should('be.visible');
 
-  it("Test Case 3", () => {
-    //Optional
+        const projectName = $el.text().trim();
+        let href = $el.attr('href');
+
+        expect(href).to.not.be.empty;
+
+        if (!href.startsWith('http')) {
+          href = `https://www.99.co${href}`;
+        }
+
+        cy.visit(href);
+        cy.visit('https://www.99.co/singapore');
+        cy.get('div._1__lJ').contains('Popular projects', { timeout: 10000 }).should('be.visible');
+      });
+    });
   });
 });
